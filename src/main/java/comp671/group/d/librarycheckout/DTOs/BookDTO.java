@@ -1,11 +1,12 @@
 package comp671.group.d.librarycheckout.DTOs;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class BookDTO {
-    public List<UUID> booksisbn;
+    public List<UUID> booksisbn = new ArrayList<>();
     public int bookquantity;
     public String title;
     public String author;

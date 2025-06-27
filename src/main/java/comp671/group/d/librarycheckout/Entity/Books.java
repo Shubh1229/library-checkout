@@ -13,7 +13,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
-import jakarta.ws.rs.QueryParam;
 
 @Entity
 public class Books extends PanacheEntityBase{

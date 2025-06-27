@@ -16,7 +16,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 
 @Tag(name = "Library Checkout CRUD API", description = "CRUD Operations of Library Checkout CRUD API")
-@Path("/libraryAPI/CRUD")
+@Path("/LibraryAPI/CRUD")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class BookControllerResource {

@@ -30,7 +30,7 @@ public class CheckedOutBooks extends PanacheEntityBase{
 
 
     public static HashMap<String,Object> getDueDate(UUID isbn){
-        CheckedOutBooks book = find("book_id", isbn).firstResult();
+        CheckedOutBooks book = find("book.id", isbn).firstResult();
         HashMap<String,Object> response = new HashMap<>();
         response.put("DueDate", book.dueDate);
         response.put("DaysLeft", ChronoUnit.DAYS.between(LocalDate.now(), book.dueDate));
