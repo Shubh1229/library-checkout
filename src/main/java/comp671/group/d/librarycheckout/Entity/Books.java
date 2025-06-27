@@ -13,6 +13,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
+import jakarta.ws.rs.QueryParam;
 
 @Entity
 public class Books extends PanacheEntityBase{
@@ -25,6 +26,8 @@ public class Books extends PanacheEntityBase{
     public int bookquantity;
 
     public List<UUID> booksisbn = generateISBN();
+
+    public List<UUID> checkedoutbooks = new ArrayList<>();
 
     @NotBlank(message = "author cannot be blank")
     @NotEmpty(message = "author cannot be empty")
@@ -78,12 +81,12 @@ public class Books extends PanacheEntityBase{
         return find("author", author).list();
     }
 
-    public static List<Books> getSpecificBook(FindBook book) throws Exception {
+    public static List<Books> getSpecificBook( FindBook book) throws Exception {
         if (book == null) throw new Exception("All queries to find book are null");
 
-        boolean hasAuthor = book.author != null && !book.author.isBlank();
-        boolean hasTitle = book.title != null && !book.title.isBlank();
-        boolean hasGenre = book.genre != null && !book.genre.isBlank();
+        boolean hasAuthor = book.author != null && !book.author.isBlank() && !book.author.isEmpty();
+        boolean hasTitle = book.title != null && !book.title.isBlank() && !book.title.isEmpty();
+        boolean hasGenre = book.genre != null && !book.genre.isBlank() && !book.genre.isEmpty();
 
         if (!hasAuthor && !hasTitle && !hasGenre) {
             throw new Exception("At least one field (author, title, or genre) must be provided.");
@@ -132,6 +135,9 @@ public class Books extends PanacheEntityBase{
         return allbooks;
     }
 
+    public static Books findBookByTitle(String title){
+        return find("title", title).firstResult();
+    }
 
 
 }

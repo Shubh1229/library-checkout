@@ -15,14 +15,14 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 
-@Tag(name = "Library Checkout API", description = "CRUD Operations of Library Checkout API")
-@Path("/libraryAPI/checkout")
+@Tag(name = "Library Checkout CRUD API", description = "CRUD Operations of Library Checkout CRUD API")
+@Path("/libraryAPI/CRUD")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class BookControllerResource {
     
     @Path("/getAllBooks")
-    @Tag(ref = "Library Checkout API", description = "Gets All Books")
+    @Tag(ref = "Library Checkout CRUD API", description = "Gets All Books")
     @GET
     @Transactional(TxType.SUPPORTS)
     public Response getAllBooks(){
@@ -31,7 +31,7 @@ public class BookControllerResource {
 
     @Path("/findBooksByAuthor/{author}")
     @GET
-    @Tag(ref =  "Library Checkout API", description = "Find a Book By Author Name")
+    @Tag(ref =  "Library Checkout CRUD API", description = "Find a Book By Author Name")
     @Transactional(TxType.SUPPORTS)
     public Response getBookByAuthor(@PathParam("author") String author){
         return Response.ok(Books.getBooksByAuthor(author)).build();
@@ -39,7 +39,7 @@ public class BookControllerResource {
 
     @Path("/addBook")
     @POST
-    @Tag(ref =  "Library Checkout API", description = "Add a Book to DB")
+    @Tag(ref =  "Library Checkout CRUD API", description = "Add a Book to DB")
     @Transactional(TxType.REQUIRED)
     public Response addBook(BookDTO book){
         Books addBook = new Books();
