@@ -14,6 +14,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 
 @Tag(name = "Library Checkout CRUD API", description = "CRUD Operations of Library Checkout CRUD API")
 @Path("/LibraryAPI/CRUD")
@@ -33,7 +34,7 @@ public class BookControllerResource {
     @GET
     @Tag(ref =  "Library Checkout CRUD API", description = "Find a Book By Author Name")
     @Transactional(TxType.SUPPORTS)
-    public Response getBookByAuthor(@PathParam("author") String author){
+    public Response getBookByAuthor(@QueryParam("author") String author){
         return Response.ok(Books.getBooksByAuthor(author)).build();
     }
 

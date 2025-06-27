@@ -2,40 +2,18 @@ package comp671.group.d.librarycheckout;
 
 import comp671.group.d.librarycheckout.Entity.Books;
 import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.response.Response;
 import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
-
-import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 public class BooksTest {
-
-    // @BeforeEach
-    // @Transactional
-    // public void setup() {
-    //     Books.deleteAll();
-
-    //     Books b = new Books();
-    //     b.id = UUID.randomUUID();
-    //     b.author = "Test Author";
-    //     b.title = "Test Title";
-    //     b.genre = "Test Genre";
-    //     b.publisher = "Test Publisher";
-    //     b.summary = "Some summary";
-    //     b.pagenumbers = 123;
-    //     b.publicationdate = LocalDate.now();
-    //     b.bookquantity = 3;
-    //     b.booksisbn = List.of();
-    //     b.persist();
-    // }
 
     @Test
     @Transactional
@@ -55,5 +33,15 @@ public class BooksTest {
             .statusCode(200)
             .body("size()", greaterThan(0));
     }
+    @Test
+    public void testGetBooksByAuthor(){
+        Response response = given()
+            .contentType("application/json")
+            .body("{}")
+            .when().get("/LibraryAPI/CRUD/findBooksByAuthor/The Hobbit");
+        assertEquals(200, response.statusCode());
+        String body = response.body().asString();
+        assertNotNull(body);
+        System.out.println(body);
+    }
 }
-
