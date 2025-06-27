@@ -37,17 +37,21 @@ public class CheckoutControllerResource {
     private static final Logger log = Logger.getLogger(CheckoutControllerResource.class);
 
     @POST
-    @Transactional(TxType.MANDATORY)
+    @Transactional(TxType.REQUIRED)
     @Path("/book/{title}")
     @Tag(ref = "Library Checkout API", description = "Checkout a Book Using Title")
     public Response checkoutBookByTitle(@PathParam("title") String title){
+        log.info("Book title: " + title + " searched for....");
         var book = Books.findBookByTitle(title);
+        log.info("Book found:\n\t" + book.toString());
         UUID isbn = null;
+        if(book.checkedoutbooks == null || book.checkedoutbooks.isEmpty()) book.checkedoutbooks = new ArrayList<>();
         for (var b : book.booksisbn) {
             if(book.checkedoutbooks.contains(b)){
                 continue;
             }
             isbn = b;
+            break;
         }
         if(isbn == null) return Response.status(400, "No Available Books To Checkout...").build();
         book.checkedoutbooks.add(isbn);
@@ -55,8 +59,8 @@ public class CheckoutControllerResource {
         LocalDate now = LocalDate.now();
         var due = now.plusDays(7);
         CheckedOutBooks chb = new CheckedOutBooks();
-        chb.book = book;
-        chb.bookId = isbn;
+        chb.bookid = isbn;
+        chb.refid = book.id;
         chb.dueDate = due;
         chb.checkoutDate = now;
         chb.persist();
@@ -74,7 +78,7 @@ public class CheckoutControllerResource {
     }
 
     @POST
-    @Transactional(TxType.SUPPORTS)
+    @Transactional(TxType.REQUIRED)
     @Path("/findbook/db")
     @Tag(ref = "Library Checkout API", description = "Find a Book From DB")
     public Response findBook(FindBook book) {

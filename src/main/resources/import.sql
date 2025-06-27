@@ -80,3 +80,7 @@ VALUES ('bc4e133f-d991-4b96-b486-c6e80e626fe3', 17, 208, DATE '1988-04-01', 'Pau
 
 INSERT INTO Books (id, bookquantity, pagenumbers, publicationdate, author, genre, publisher, summary, title, booksisbn)
 VALUES ('e9cfaacc-1cc3-43f9-beab-fc14595cf645', 3, 371, DATE '2003-05-29', 'Khaled Hosseini', 'Drama', 'Riverhead Books', 'Summary of The Kite Runner', 'The Kite Runner', NULL);
+
+
+INSERT INTO CheckedOutBooks (bookid, refid, checkoutDate, dueDate)
+VALUES ('91a50d7d-ec7d-40f8-908d-add3b08dd5be', '91a50d7d-ec7d-40f8-908d-add3b08dd5ae', DATE '2025-06-24', DATE '2025-07-01');

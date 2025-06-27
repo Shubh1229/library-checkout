@@ -135,7 +135,31 @@ public class Books extends PanacheEntityBase{
     }
 
     public static Books findBookByTitle(String title){
-        return find("title", title).firstResult();
+        log.info("Looking for Title: " + title);
+        Books b = find("title", title).firstResult();
+        log.info("Found book is null?: " + (b == null));
+        if(b.booksisbn == null || b.booksisbn.isEmpty()) {
+            b.booksisbn = b.generateISBN();
+            b.persist();
+        }
+        return b;
+    }
+
+    @Override
+    public String toString() {
+        return "Books {" +
+            "id=" + id +
+            ", title='" + title + '\'' +
+            ", author='" + author + '\'' +
+            ", genre='" + genre + '\'' +
+            ", publisher='" + publisher + '\'' +
+            ", summary='" + (summary != null && summary.length() > 60 ? summary.substring(0, 60) + "..." : summary) + '\'' +
+            ", publicationdate=" + publicationdate +
+            ", pagenumbers=" + pagenumbers +
+            ", bookquantity=" + bookquantity +
+            ", booksisbnCount=" + (booksisbn != null ? booksisbn.size() : 0) +
+            ", checkedoutbooksCount=" + (checkedoutbooks != null ? checkedoutbooks.size() : 0) +
+            '}';
     }
 
 

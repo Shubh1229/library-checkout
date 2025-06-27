@@ -19,6 +19,8 @@ public class FullEndpointCoverageTest {
     public void testCheckoutBookByTitleSuccess() {
         String title = "Harry Potter and the Philosopher's Stone";
         Response response = given()
+            .contentType("application/json")
+            .body("{}")
             .when()
             .post("/LibraryAPI/Checkout/book/" + title);
         assertEquals(200, response.getStatusCode());
@@ -27,7 +29,7 @@ public class FullEndpointCoverageTest {
 
     @Test
     public void testGetDueDate() {
-        UUID isbn = UUID.fromString("91a50d7d-ec7d-40f8-908d-add3b08dd5ae");
+        UUID isbn = UUID.fromString("91a50d7d-ec7d-40f8-908d-add3b08dd5be");
         Response response = given()
             .when()
             .get("/LibraryAPI/Checkout/book/duedate/" + isbn.toString());
