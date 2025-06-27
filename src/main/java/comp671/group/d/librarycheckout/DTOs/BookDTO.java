@@ -14,4 +14,10 @@ public class BookDTO {
     public String summary;
     public int pagenumbers;
     public LocalDate publicationdate;
+
+    public void generateISBN(){
+        for(int i = 0; i < bookquantity; i++){
+            this.booksisbn.add(UUID.randomUUID());
+        }
+    }
 }

@@ -20,11 +20,11 @@ public class Books extends PanacheEntityBase{
     @NotNull(message = "ID cannot be null")
     public UUID id = UUID.randomUUID();
 
-    public List<UUID> booksisbn = new ArrayList<UUID>();
-
     @NotNull(message = "page numbers cannot be null")
     @Min(value = 1, message = "book copies must be above 0")
     public int bookquantity;
+
+    public List<UUID> booksisbn = generateISBN();
 
     @NotBlank(message = "author cannot be blank")
     @NotEmpty(message = "author cannot be empty")
@@ -50,6 +50,14 @@ public class Books extends PanacheEntityBase{
 
     @NotNull(message = "publication date cannot be null")
     public LocalDate publicationdate;
+
+    private List<UUID> generateISBN() {
+        List<UUID> list = new ArrayList<>();
+        for(int i = 0; i < (( bookquantity > 0) ? bookquantity : 1); i++) {
+            list.add(UUID.randomUUID());
+        }
+        return list;
+    }
 
 
     private static final Logger log = Logger.getLogger(Books.class);
@@ -107,6 +115,21 @@ public class Books extends PanacheEntityBase{
 
         // All three fields provided
         return find("author = ?1 and title = ?2 and genre = ?3", book.author, book.title, book.genre).list();
+    }
+
+    public static List<Books> findAllBooks(){
+        var allbooks = Books.<Books>listAll();
+        for (Books b : allbooks) {
+            if(b.booksisbn == null || b.booksisbn.size() != b.bookquantity){
+                List<UUID> list = new ArrayList<>();
+                for(int i = 0; i < b.bookquantity; i++){
+                    list.add(UUID.randomUUID());
+                }
+                b.booksisbn = list;
+                b.persist();
+            }
+        }
+        return allbooks;
     }
 
 
